@@ -52,67 +52,156 @@ The dataset contains *1,000 customer records* with the following columns:
 ---
 
 # 🔧 Workflow Pipeline
+## 1. Data Collection
 
-## 1. Data Collection : 
-- Collect the dataset of Subscribtion Based Platform  . Dataset contain training(10000 rows and 12 coloumns) and testing files .
-- We imported panda as pd . then we  load the data using the pd.read_csv("dataset.csv").we give name to dataset df.
-- for showing first 5 rows   we used df.head().
+- Collected the dataset from a **Subscription-Based Platform**. The dataset contains training (10,000 rows and 12 columns) and testing files.  
+- Imported `pandas` as `pd` and loaded the data using `pd.read_csv("customer_churn_data.csv")`. The dataset was assigned to the variable `df`.  
+- Displayed the first five rows using `df.head()`.
 
 **Dataset:** `customer_churn_data.csv`
-## 2. Data Cleaning 
 
-- first we checked the data set is imbalanced or not , and for that i counted  the curns value  and converted into percentage using normalization .
-###  checking the missing values 
-  -we removed the missing churn value rows.using df.dropna(subset=["churn"]).
-  -we used df.isnull().sum() to find in each column how many  null values are there.
-### 🔹 Handling Missing Values
-- *Categorical features* → previusly we found out  the categorical type data. and used for loop  on them and used  fillna() replace missing value (NaN) in the column using mode .
-    -
-- *Numerical features* →simillary we are using for loop and  used fillna()  and replace missing value (NaN) in the column  and using mean.
-- we checked datatype of each attribute. and found 8attributes are float type and 3 are categorical type .
-- we removed Strongs features  like Total spend, Tenure , Last Transaction so the model does not overfit  using df.drop(colmuns=strong_features,errors="ignore").
-### Feture Seprating and target 
-  -we are seprating all the customer information from the target using drop(). basically all the customer information is X axis and target "chrun" is Y axis . so that we can build relationship bw dataset and target .
-## 3. Data Preprocessing.
-🔹 Encoding Categorical Features:
-we imported oneHotEncoder and StandardScaler form sklearn.preprocessing.
--Apply One-Hot Encoding to categorical columns and Standard Scaling to numerical columns using a single combined transformer.
-Use *One-Hot Encoding* for the following features:
-- *Subscription Type* (Basic, Premium, Gold)  
-- *Contract Length* (Monthly, Annual, Quarterly)  
-- *Gender* (Male/Female)
-  
-### 🔹 Feature Scaling
--Apply *feature scaling (StandardScaler or MinMaxScaler)* for models like *Logistic Regression*, which are sensitive to feature magnitudes.
-### Train /Test Split 
-  -we splits the data into 80% training and 20% testing while keeping the class proportions the same using stratify=y.
+---
 
-## 3. Exploratory Data Analysis (Visualizations)
--Several visualizations were created to understand feature distributions and patterns.
-  - a. Distribution Plots (Numerical Features)
-  - b. Churn Count Plot
-  - c. Correlation Heatmap (Matplotlib)
-  - d. Box Plot (Outlier Detection)
+## 2. Data Cleaning
 
+- Checked whether the dataset is imbalanced by counting the churn values and converting them into percentages using normalization.
 
+### Checking Missing Values
+- Removed rows with missing churn values using `df.dropna(subset=["churn"])`.  
+- Used `df.isnull().sum()` to find the number of null values in each column.
+
+### Handling Missing Values
+- **Categorical features:** Identified categorical columns and used a `for` loop with `fillna()` to replace missing (NaN) values with the mode.  
+- **Numerical features:** Similarly, used a `for` loop with `fillna()` to replace missing (NaN) values with the mean.
+
+- Checked the data types and found 8 numerical (float) attributes and 3 categorical attributes.  
+- Removed strong features like `Total_Spend`, `Tenure`, and `Last_Transaction` using `df.drop(columns=strong_features, errors="ignore")` to prevent model overfitting.
+
+### Feature Separation and Target
+- Separated the customer information (features) from the target variable.  
+- Used `drop()` to create `X` (features) and `y` (target), where `churn` is the target variable. This separation helps in building relationships between features and the target.
+
+---
+
+## 3. Data Preprocessing
+
+### Encoding Categorical Features
+- Imported `OneHotEncoder` and `StandardScaler` from `sklearn.preprocessing`.  
+- Applied **One-Hot Encoding** to categorical columns and **Standard Scaling** to numerical columns using a combined transformer.
+
+**One-Hot Encoded Features:**
+- Subscription Type (Basic, Premium, Gold)  
+- Contract Length (Monthly, Annual, Quarterly)  
+- Gender (Male, Female)
+
+### Feature Scaling
+- Applied feature scaling using `StandardScaler` (or `MinMaxScaler`) for models like Logistic Regression, which are sensitive to magnitude differences.
+
+### Train/Test Split
+- Split the dataset into 80% training and 20% testing, maintaining class proportions using `stratify=y`.
+
+---
+
+## 4. Exploratory Data Analysis (EDA)
+
+Created several visualizations to understand feature distributions and patterns:
+
+- Distribution plots (for numerical features)  
+- Churn count plot  
+- Correlation heatmap (using Matplotlib)  
+- Box plot (for outlier detection)
+
+---
 
 ## 5. Model Training
-- Logistic Regression
-    -Logistic Regression was chosen for its simplicity, interpretability, and strong performance on small datasets. It provides a clear baseline and helps identify which features most strongly influence churn.
-    -We are importing Logistic Regression model from  sklearn .
-    -I created a Pipeline that combines preprocessing and logistic regression into a single workflow.LogisticRegression is applied with max_iter=200.
-  -This Pipeline ensures that the exact same preprocessing is applied during both training and testing, prevents data leakage, and makes the model easier to maintain and deploy.
-  -After that , I train the model using log_reg_model.fit(X_train,Y_train) .
-  -After that , I made prediction using Testing data by using log_reg_model.predict(X_test).
-  -Finally i checked the Accuracy_score(y_test,y_pred). we got accuracy  of 72%
-  
-- Random Forest  
-  -Random Forest was selected because it captures complex, non-linear patterns in customer behavior, is robust to outliers, handles mixed feature types, and provides strong accuracy with minimal tuning.
 
-## 6. Model Evaluation
-- Confusion Matrix  : Shows TP, TN, FP, FN.
-- ROC Curve  : Measures performance across thresholds.
-- Accuracy  : Primary metric for hackathon (~70% target).
+- **Model Used:** Logistic Regression  
+- Chosen for its simplicity, interpretability, and efficiency on small datasets. It also provides clear insight into which features influence churn.
+
+### Steps:
+1. Imported `LogisticRegression` from `sklearn.linear_model`.  
+2. Created a `Pipeline` combining preprocessing steps and the model for consistent transformation during both training and testing.  
+3. Configured the model with `max_iter=200`.  
+4. Trained the model using `log_reg_model.fit(X_train, y_train)`.  
+5. Made predictions on the test set using `log_reg_model.predict(X_test)`.  
+6. Evaluated performance using `accuracy_score(y_test, y_pred)`.
+
+**Result:** Achieved an accuracy of approximately **72%**.
+
+---
+
+## 5. Model Training
+
+### Logistic Regression
+
+- **Model Used:** Logistic Regression  
+- Chosen for its simplicity, interpretability, and strong performance on small datasets. This model helps identify which features most influence customer churn.
+
+#### Steps:
+1. Imported `LogisticRegression` from `sklearn.linear_model`.
+2. Created a `Pipeline` that combines preprocessing steps with the logistic regression model, ensuring consistent transformations during both training and testing.
+3. Configured the model with `max_iter=200` to allow sufficient iterations for convergence.
+4. Trained the model with `log_reg_model.fit(X_train, y_train)`.
+5. Predicted labels on the test set using `log_reg_model.predict(X_test)`.
+6. Evaluated model performance using `accuracy_score(y_test, y_pred)`.
+
+**Result:** Achieved an accuracy of approximately **72%**.
+
+---
+
+### Random Forest
+
+- **Model Used:** Random Forest Classifier  
+- Chosen for its robustness to overfitting and ability to capture complex, non-linear relationships in the data.
+
+#### Steps:
+1. Imported `RandomForestClassifier` from `sklearn.ensemble`.
+2. Used `Pipeline` from `sklearn.pipeline` to combine data preprocessing and model training.
+3. Configured the classifier with `n_estimators=200` (number of trees), `max_depth=None` (full depth), and `random_state=42` (reproducibility).
+4. Trained the pipeline using `rf_model.fit(X_train, y_train)`.
+5. Predicted test set labels with `rf_model.predict(X_test)`.
+6. Evaluated the model with `accuracy_score(y_test, rf_pred)` and `classification_report(y_test, rf_pred)`.
+
+**Result:** Achieved an accuracy of approximately **71%**.
+
+---
+
+
+
+## 6. ROC & AUC Curves
+
+Used ROC curves and AUC scores to assess the classification performance and discriminative ability of both Logistic Regression and Random Forest models.
+
+---
+
+### Import Libraries
+
+- Imported `roc_auc_score` and `roc_curve` from `sklearn.metrics` for ROC curve analysis.
+- Imported `matplotlib.pyplot` for plotting the ROC curves.
+
+---
+
+### 6.1 — Logistic Regression ROC–AUC
+
+- Generated predicted probabilities for the positive class using `predict_proba`.
+- Calculated the AUC (Area Under the Curve) score for Logistic Regression.
+
+---
+
+### 6.2 — Random Forest ROC–AUC
+
+- Generated predicted probabilities for the positive class using `predict_proba`.
+- Calculated the AUC score for Random Forest.
+
+---
+
+### 6.3 — Plot ROC Curves
+
+- Computed the False Positive Rate (FPR) and True Positive Rate (TPR) for both models.
+- Plotted ROC curves to compare model performance visually.
+
+
+
 
 ## 7. Model Deployment
   - Streamlit (Simple UI)
