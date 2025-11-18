@@ -113,22 +113,8 @@ Created several visualizations to understand feature distributions and patterns:
 
 ---
 
-## 5. Model Training
 
-- **Model Used:** Logistic Regression  
-- Chosen for its simplicity, interpretability, and efficiency on small datasets. It also provides clear insight into which features influence churn.
 
-### Steps:
-1. Imported `LogisticRegression` from `sklearn.linear_model`.  
-2. Created a `Pipeline` combining preprocessing steps and the model for consistent transformation during both training and testing.  
-3. Configured the model with `max_iter=200`.  
-4. Trained the model using `log_reg_model.fit(X_train, y_train)`.  
-5. Made predictions on the test set using `log_reg_model.predict(X_test)`.  
-6. Evaluated performance using `accuracy_score(y_test, y_pred)`.
-
-**Result:** Achieved an accuracy of approximately **72%**.
-
----
 
 ## 5. Model Training
 
@@ -201,6 +187,13 @@ Used ROC curves and AUC scores to assess the classification performance and disc
 - Plotted ROC curves to compare model performance visually.
 
 
+## 7. Confusion Matrices
+
+Visualized confusion matrices to assess and compare the classification performance of Logistic Regression and Random Forest models. This helped inspect how well each model distinguishes between churned and non-churned customers.
+
+## 8. Precision–Recall Curve
+
+Evaluated model performance using Precision–Recall curves, which are particularly valuable for imbalanced datasets like churn prediction. The curves show the tradeoff between precision and recall for different thresholds.
 
 
 ## 7. Model Deployment
