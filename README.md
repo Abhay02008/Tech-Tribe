@@ -143,7 +143,7 @@ Created several visualizations to understand feature distributions and patterns:
 #### Steps:
 1. Imported `RandomForestClassifier` from `sklearn.ensemble`.
 2. Used `Pipeline` from `sklearn.pipeline` to combine data preprocessing and model training.
-3. Configured the classifier with `n_estimators=200` (number of trees), `max_depth=None` (full depth), and `random_state=42` (reproducibility).
+3. Configured the classifier with `n_estimators=200` (number of trees), `max_depth=None` (full depth), and `random_state=53` (reproducibility).
 4. Trained the pipeline using `rf_model.fit(X_train, y_train)`.
 5. Predicted test set labels with `rf_model.predict(X_test)`.
 6. Evaluated the model with `accuracy_score(y_test, rf_pred)` and `classification_report(y_test, rf_pred)`.
@@ -195,8 +195,12 @@ Visualized confusion matrices to assess and compare the classification performan
 
 Evaluated model performance using Precision–Recall curves, which are particularly valuable for imbalanced datasets like churn prediction. The curves show the tradeoff between precision and recall for different thresholds.
 
+## 9. Feature Importance – Random Forest
 
-## 7. Model Deployment
+Analyzed feature importance scores from the Random Forest model to identify the top contributors to customer churn prediction.
+
+
+## 10. Model Deployment
   - Streamlit (Simple UI)
   - Input fields for customer data.
   - Churn prediction output
